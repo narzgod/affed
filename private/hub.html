@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0707">
+<title>Owner - F1 Mad AFF Tools</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+@font-face{font-family:"MotoGP Display";src:url(/owner/tools/race-result/MotoGP_Display_Bold.ttf);font-weight:700}
+@font-face{font-family:"MotoGP Text";src:url(/owner/tools/race-result/MotoGPText-Regular.ttf);font-weight:400}
+@font-face{font-family:"MotoGP Text";src:url(/owner/tools/race-result/MotoGPText-Bold.ttf);font-weight:700}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:#0b0707 radial-gradient(ellipse at top,#3a0b0b 0%,#0b0707 60%) fixed;color:#eee;font:15px/1.4 "MotoGP Text",system-ui,sans-serif}
+#hub{max-width:520px;margin:auto;padding:28px 18px calc(40px + env(safe-area-inset-bottom))}
+.logo{text-align:center;margin:10px 0 6px}
+.logo b{display:inline-block;font:700 44px/1 "MotoGP Display",Impact,sans-serif;font-style:italic;color:#e10600;letter-spacing:1px;text-shadow:0 0 24px #e1060055}
+.logo b i{color:#fff;font-style:italic}
+.sub{text-align:center;color:#b9aaaa;font-size:14px;margin:14px 6px 26px}
+.card{display:block;width:100%;text-align:left;padding:0;margin:0 0 18px;background:linear-gradient(#1a0e0e,#120909);border:1px solid #3a2222;border-radius:16px;overflow:hidden;color:inherit;font:inherit;cursor:pointer}
+.card:active{transform:scale(.985);border-color:#e10600}
+.card .im{height:200px;background:#000 center/contain no-repeat;border-bottom:1px solid #2a1818}
+.card .im.ph{height:110px;display:flex;align-items:center;justify-content:center;font:italic 700 30px/1 MotoGP Display,Impact,sans-serif;letter-spacing:1px;background:#0c0d12}.card .im.ph span{color:#e10600;margin-left:8px}
+.card .tx{padding:14px 16px 18px}
+.card h2{margin:0 0 6px;font:700 20px/1.15 "MotoGP Display",Impact,sans-serif;text-transform:uppercase;letter-spacing:.5px}
+.card p{margin:0;color:#a99;font-size:14px}
+.foot{text-align:center;color:#7d6c6c;font-size:12px;margin-top:8px}
+/* layar tool */
+#viewer{position:fixed;inset:0;display:none;flex-direction:column;background:#0b0b0d;z-index:10}
+#viewer.on{display:flex}
+#bar{flex:0 0 auto;display:flex;align-items:center;gap:10px;height:calc(46px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 10px 0;background:#120909;border-bottom:2px solid #e10600}
+#bar button{background:#e10600;color:#fff;border:0;border-radius:8px;padding:8px 14px;font:700 14px "MotoGP Text",system-ui,sans-serif;cursor:pointer}
+#bar span{font:700 14px "MotoGP Text",system-ui,sans-serif;text-transform:uppercase;color:#ddd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#slot iframe{flex:1 1 auto;width:100%;border:0;background:#0b0b0d}
+</style>
+</head>
+<body>
+<div id="hub">
+  <div class="logo"><b>F1 MAD AFF <i>TOOLS</i></b></div>
+  <p class="sub">Area pemilik. Pilih salah satu di bawah, semuanya dibuka di halaman ini.</p>
+  <div id="list"></div>
+  <p class="foot">Hasil poster tersimpan di perangkatmu sendiri.</p>
+  <p class="foot"><button id="lock" style="background:none;border:1px solid #3a2222;color:#b9aaaa;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer">Kunci &amp; keluar</button></p>
+</div>
+
+<div id="viewer">
+  <div id="bar"><button id="back">&larr; Menu</button><span id="ttl"></span></div>
+  <div id="slot" style="flex:1 1 auto;display:flex;min-height:0"></div>
+</div>
+
+<script>
+const TOOLS=[
+ {id:"race-result",  t:"Race Result",       d:"Poster hasil race: podium P1-P3 dan daftar P4-P10",           img:"/owner/assets/f1c.jpg",    src:"/owner/tools/race-result/index.html"},
+ {id:"poster-studio",t:"Poster Studio",     d:"Studio poster lengkap: Winner, Pole, Fastest dan lainnya",     img:"/owner/assets/studio.jpg", src:"/owner/tools/poster-studio/index.html"},
+ {id:"race-week",    t:"Race Week",         d:"Poster pengumuman Race Week dengan bendera dan nama GP",       img:"/owner/assets/race.jpg",   src:"/owner/tools/race-week/index.html"},
+ {id:"driver-standings",t:"Driver Standings",d:"Klasemen pembalap dengan poin, naik-turun posisi, dan negara", img:"/owner/assets/drv.jpg",    src:"/owner/tools/driver-standings/index.html"},
+ {id:"team-standings",t:"Team Standings",   d:"Klasemen tim konstruktor dengan warna dan logo tim",           img:"/owner/assets/team.jpg",   src:"/owner/tools/team-standings/index.html"},
+ {id:"legends-manager",t:"Academy Formula Federation Manager",d:"Kelola event, balapan, hasil, tim, ban, dan lisensi driver", img:"", src:"/owner/manager.html"}
+];
+const $=id=>document.getElementById(id);
+const list=$("list"),viewer=$("viewer"),slot=$("slot");
+TOOLS.forEach(x=>{
+  const b=document.createElement("button");
+  b.className="card";
+  const im=x.img?'<div class="im" id="im-'+x.id+'" style="background-image:url('+x.img+')"></div>':'<div class="im ph">Academy <span>Formula Federation</span></div>';
+  b.innerHTML=im+'<div class="tx"><h2>'+x.t+'</h2><p>'+x.d+'</p></div>';
+  b.onclick=()=>{history.pushState({tool:x.id},"","#"+x.id);open(x.id)};
+  list.appendChild(b);
+});
+function open(id){
+  const x=TOOLS.find(t=>t.id===id); if(!x){close();return}
+  $("ttl").textContent=x.t;
+  if(slot.dataset.id!==id){
+    slot.innerHTML="";
+    const f=document.createElement("iframe");
+    f.title=x.t;f.setAttribute("allow","clipboard-write; fullscreen");f.src=x.src;
+    slot.appendChild(f);slot.dataset.id=id;
+  }
+  viewer.classList.add("on");
+}
+function refreshPrev(){
+  TOOLS.forEach(x=>{const el=$("im-"+x.id);if(!el)return;let p=null;try{p=localStorage.getItem("f1c-prev:"+x.id)}catch(e){}
+    el.style.backgroundImage="url('"+(p||x.img)+"')"})
+}
+function close(){
+  try{const w=slot.firstChild&&slot.firstChild.contentWindow;if(w&&w.__snapPrev)w.__snapPrev()}catch(e){}
+  viewer.classList.remove("on");
+  slot.innerHTML="";slot.dataset.id="";
+  refreshPrev();
+}
+$("lock").onclick=()=>{fetch("/api/gate",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({logout:1})}).finally(()=>{location.href="/"})};
+$("back").onclick=()=>{ history.replaceState(null,"",location.pathname+location.search); close() };
+addEventListener("popstate",()=>{ const id=location.hash.slice(1); id?open(id):close() });
+refreshPrev();
+if(location.hash)open(location.hash.slice(1));
+</script>
+</body>
+</html>
