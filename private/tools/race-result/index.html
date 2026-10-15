@@ -2,9 +2,6 @@
 <style>
 @font-face{font-family:"Formula1";src:url(/fonts/Formula1-Regular.ttf);font-weight:400}
 @font-face{font-family:"Formula1";src:url(/fonts/Formula1-Bold.ttf);font-weight:700}
-@font-face{font-family:"MotoGP Display";src:url(MotoGP_Display_Bold.ttf);font-weight:700}
-@font-face{font-family:"MotoGP Text";src:url(MotoGPText-Regular.ttf);font-weight:400}
-@font-face{font-family:"MotoGP Text";src:url(MotoGPText-Bold.ttf);font-weight:700}
 *{box-sizing:border-box}body{margin:0;background:#0b0b0d;color:#eee;font:15px system-ui,sans-serif}
 #top{position:sticky;top:0;z-index:5;background:#0b0b0d;border-bottom:2px solid #e10600;text-align:center;padding-top:6px}
 #cv{height:33vh;aspect-ratio:4/5;max-width:96%;border-radius:6px}
@@ -28,7 +25,7 @@ input[type=range]{width:100%}input[type=color]{width:100%;height:42px;border:0;b
 <script src="/owner/tools/combo.js"></script>
 <script>
 const W=720,H=900,$=i=>document.getElementById(i),cv=$('cv');let x=cv.getContext('2d');
-const uid=()=>Math.random().toString(36).slice(2,8),BASE=['Formula1','MotoGP Display','MotoGP Text','Impact','Arial Black','Arial','Helvetica','Verdana','Trebuchet MS','Tahoma','Georgia','Times New Roman','Palatino Linotype','Courier New','Lucida Console'];
+const uid=()=>Math.random().toString(36).slice(2,8),BASE=['Formula1','Impact','Arial Black','Arial','Helvetica','Verdana','Trebuchet MS','Tahoma','Georgia','Times New Roman','Palatino Linotype','Courier New','Lucida Console'];
 const TSK={grid:[['gdn','Nama pembalap'],['gpos','Nomor posisi'],['gcty','Nama negara'],['grnd','Info ronde'],['gside','Teks samping'],['gfoot','Teks bawah']],res:[['rnm','Nama di kartu podium'],['rnum','Angka podium 1-2-3'],['rpt','Poin di kartu podium'],['rhd','Judul atas (ronde / lokasi)'],['tpos','Nomor posisi tabel'],['tfn','Nama depan di tabel'],['tln','Nama belakang di tabel'],['ttm','Nama tim di tabel'],['tpt','Poin di tabel']]};
 const GFL=['Oswald','Bebas Neue','Teko','Barlow Condensed','Rajdhani','Orbitron','Anton','Russo One','Saira Condensed','Titillium Web','Exo 2','Chakra Petch','Racing Sans One','Black Ops One','Big Shoulders Display','Roboto Condensed','Kanit','Montserrat','Poppins','Playfair Display'];
 const LA=()=>S.mode=='grid'?S.gr.layers:S.layers;
@@ -39,7 +36,7 @@ const GR=()=>({n:10,round:'ROUND 4',cty:'Italy',title:'STARTING GRID',foot:'',fl
 rows:['d0','d1','d3','d6','d5','d2','d8','d7','d4','d9'].map((d,i)=>({d,lab:i>4?'PIT':''})),
 layers:[L('stripes',{o:.045,s:1.4}),L('glow',{c:'#e10600',o:.32,x:700,y:30,s:1.5}),L('glow',{c:'#2b59ff',o:.16,x:40,y:880,s:1.3}),L('speed',{o:.05})]});
 const def=()=>({ev:{round:'ROUND 03',place:'DUBAI',brand:'F1 Mad AFF',lg:[{src:'',x:70,y:41,h:60},{src:'',x:360,y:28,h:44},{src:'',x:650,y:41,h:60}]},
-st:{f1:'MotoGP Display',f2:'MotoGP Text',gold:'#f5b53c',bg:'#0e0e10',rowA:'#1b1b1d',rowB:'#2a2a2c',red:'#e10600',pc:'#4a4a4a',ps:1,k:2,f3:'MotoGP Display',ns:1,nx:0,ny:0,sk:0,nm:1,pt:1,pls:1,tls:1,tlx:372,cc:28,pg:10,tnx:414},rows:7,mode:'res',gr:GR(),
+st:{f1:'Formula1',f2:'Formula1',gold:'#f5b53c',bg:'#0e0e10',rowA:'#1b1b1d',rowB:'#2a2a2c',red:'#e10600',pc:'#4a4a4a',ps:1,k:2,f3:'Formula1',ns:1,nx:0,ny:0,sk:0,nm:1,pt:1,pls:1,tls:1,tlx:372,cc:28,pg:10,tnx:414},rows:7,mode:'res',gr:GR(),
 teams:[{id:'nr',name:'Nightrunners',logo:'',c:['#dcdcdc','#7c7c7c','#ffffff']},{id:'rb',name:'Red Bull Racing',logo:'',c:['#d9d9d9','#f2f2f2','#c9c9c9']},{id:'ts',name:'Tim Bintang',logo:'',c:['#8ec9ef','#5aa9de','#111111']},{id:'zv',name:'ZVA',logo:'',c:['#1a2a6c','#0e1840','#0e1840']},{id:'tp',name:'Tim Panah',logo:'',c:['#c8102e','#7a0a1c','#ffffff']}],
 drivers:[['Alexandro','','rb'],['Verrel','','nr'],['Ghani','','ts'],['Zrill','Kazure','nr'],['Rebon','Shin','rb'],['Govan','Vito','zv'],['Prayata','Fajar','tp'],['Pramana','Aditya','tp'],['Ares','Ayrton','ts'],['Reglia','Shin','zv']].map((a,i)=>({id:'d'+i,last:a[0],first:a[1],team:a[2],photo:''})),
 res:['25','18','18','12','DSQ','DNF','DNF','DNS','DNS','DNS'].map((v,i)=>({d:'d'+i,v})),
@@ -48,7 +45,7 @@ let S;try{S=JSON.parse(localStorage.getItem('f1c1'))}catch(e){}
 S=S||def();if(!S.ev.lg){const g=def().ev.lg;g[0].src=S.ev.logoL||'';g[1].src=S.ev.logoB||'';S.ev.lg=g}{const d=def();S.st={...d.st,...S.st};S.ev={...d.ev,...S.ev};S.cf=S.cf||[]}if(!S.gr){S.gr=GR();S.ev.lg.forEach((l,i)=>S.gr.lg[i].src=l.src)}S.gr={...GR(),...S.gr};S.mode=S.mode||'res';S.gf=S.gf||[];S.ts=S.ts||{};[...TSK.grid,...TSK.res].forEach(([k])=>S.ts[k]=S.ts[k]||{});
 const save=()=>{try{localStorage.setItem('f1c1',JSON.stringify(S))}catch(e){toast('Memori penuh. Kecilkan atau kurangi foto.')}};
 const toast=m=>{const t=$('ts');t.textContent=m;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,2500)};
-const fix=()=>{while(S.res.length<3+S.rows)S.res.push({d:'',v:''});while(S.gr.rows.length<S.gr.n)S.gr.rows.push({d:'',lab:''})};
+const mgf=v=>/MotoGP/.test(v||'')?'Formula1':v,fix=()=>{if(S.st)['f1','f2','f3'].forEach(k=>S.st[k]=mgf(S.st[k]));Object.values(S.ts||{}).forEach(o=>{if(o&&o.f)o.f=mgf(o.f)});while(S.res.length<3+S.rows)S.res.push({d:'',v:''});while(S.gr.rows.length<S.gr.n)S.gr.rows.push({d:'',lab:''})};
 const D=id=>S.drivers.find(d=>d.id==id),TM=id=>S.teams.find(t=>t.id==id)||{name:'',logo:'',c:['#444','#222','#ddd']};
 const lum=c=>{const n=parseInt(c.slice(1),16);return((n>>16)*.3+(n>>8&255)*.59+(n&255)*.11)>150?'#111':'#fff'};
 const IM={};function im(s,tr){if(!s)return null;let o=IM[s];if(!o){const i=new Image;o=IM[s]={i};i.onload=()=>{o.ok=1;if(tr)trim(o);draw()};i.src=s}return o.ok?(tr&&o.t)||o.i:null}
@@ -82,7 +79,7 @@ T(a,hs,x0,88,'left',o.c||s.gold,hf,null,hw);T(b,hs,x0+wa,88,'left',o.c||'#fff',h
 function card(k,cx,cy,w,h){const r=S.res[k],d=D(r.d),t=TM(d&&d.team),[a,b,e]=t.c,ah=h-44,s=S.st,mx=cx+w/2;
 const c=s.cc;x.save();x.beginPath();x.moveTo(cx+c,cy);x.lineTo(cx+w,cy);x.lineTo(cx+w,cy+h);x.lineTo(cx,cy+h);x.lineTo(cx,cy+c);x.closePath();x.clip();
 const g=x.createLinearGradient(0,cy,0,cy+h);g.addColorStop(0,a);g.addColorStop(1,b);x.fillStyle=g;x.fillRect(cx,cy,w,h);
-x.save();x.translate(cx+14+s.nx,cy+62+s.ny);if(s.sk)x.transform(1,0,-.2,1,0,0);TXo(S.ts.rnum,k+1,118*s.ns,0,0,'left','#fff',s.f3,s.f3=='MotoGP Text'?700:400);x.restore();
+x.save();x.translate(cx+14+s.nx,cy+62+s.ny);if(s.sk)x.transform(1,0,-.2,1,0,0);TXo(S.ts.rnum,k+1,118*s.ns,0,0,'left','#fff',s.f3,700);x.restore();
 const p=d&&im(d.photo,1);
 if(p){const q=Math.min(w*1.15/p.width,(ah+8)/p.height)*s.ps*(d.ps??1),pw=p.width*q,ph=p.height*q;x.save();x.beginPath();x.rect(cx,cy,w,ah);x.clip();x.drawImage(p,mx-pw/2+(d.px||0),cy+ah-ph+(d.py||0),pw,ph);x.restore()}
 else if(d){x.fillStyle='rgba(0,0,0,.22)';x.beginPath();x.arc(mx,cy+ah-170,46,0,7);x.fill();x.beginPath();x.ellipse(mx,cy+ah,90,120,0,Math.PI,2*Math.PI);x.fill()}
@@ -190,5 +187,5 @@ if(a=='rst'){if(!confirm('Hapus semua data dan kembali ke awal?'))return;localSt
 rd();draw();save()});
 $('panel').addEventListener('change',e=>{const t=e.target;if(!t.dataset.bk||!t.files[0])return;t.files[0].text().then(x=>{try{const d=JSON.parse(x);if(!d||!d.drivers||!d.res)throw 0;localStorage.setItem('f1c1',JSON.stringify(d));location.reload()}catch(er){alert('File data tidak bisa dibaca.')}});t.value=''});
 fix();S.gf.forEach(loadGF);document.fonts.onloadingdone=draw;rd();draw();
-Promise.all(['400 20px "Formula1"','700 20px "Formula1"','700 20px "MotoGP Display"','400 20px "MotoGP Text"','700 20px "MotoGP Text"'].map(f=>document.fonts.load(f))).then(draw);
+Promise.all(['400 20px "Formula1"','700 20px "Formula1"',].map(f=>document.fonts.load(f))).then(draw);
 </script><script src="/owner/tools/prev.js"></script></body></html>

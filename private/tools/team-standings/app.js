@@ -3,7 +3,7 @@ const W = 1080, H = 1350;
 const cv = document.getElementById('cv'), g = cv.getContext('2d');
 const uid = () => Math.random().toString(36).slice(2, 8);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const BUILTIN = ['Formula 1 Bold', 'Formula 1 Regular', 'MotoGP Display Bold', 'MotoGP Text Bold', 'MotoGP Text Regular', 'Arial Black', 'Impact', 'Arial', 'Georgia', 'Courier New', 'Trebuchet MS'];
+const BUILTIN = ['Formula 1 Bold', 'Formula 1 Regular', 'Arial Black', 'Impact', 'Arial', 'Georgia', 'Courier New', 'Trebuchet MS'];
 const LAYER_TYPES = {
   dots: 'Titik halftone (sudut)', stripes: 'Garis miring', checker: 'Papan catur (finish)', kerb: 'Kerb merah-putih', carbon: 'Karbon',
   speed: 'Garis kecepatan', track: 'Lintasan sirkuit', slash: 'Panel miring', ring: 'Cincin', grid: 'Kisi', chevron: 'Panah chevron', glow: 'Cahaya'
@@ -23,7 +23,7 @@ function defaults() {
   return {
     ver: 1, title: 'SEASON 2 TEAM\nSTANDINGS', lead: 'Points After The', event: 'DUBAI GP', nextLabel: 'NEXT STOP:', nextCountry: 'ITALY',
     flagEvent: { code: 'ae', img: null }, flagNext: { code: 'it', img: null },
-    fontMap: { title: 'MotoGP Display Bold', lead: 'MotoGP Text Bold', event: 'MotoGP Text Bold', name: 'MotoGP Text Bold', points: 'MotoGP Display Bold', move: 'MotoGP Display Bold', footer: 'MotoGP Text Bold' },
+    fontMap: { title: 'Formula 1 Bold', lead: 'Formula 1 Bold', event: 'Formula 1 Bold', name: 'Formula 1 Bold', points: 'Formula 1 Bold', move: 'Formula 1 Bold', footer: 'Formula 1 Bold' },
     titleCfg: { x: 39, y: 232, size: 66, gap: 57, sx: 100, sy: 100, ls: 0 }, logos: [],
     st: { rowStyle: 'v', radius: 30, gap: 0, mid: 'white', ptsBg: 'row', legend: true, goldFirst: false, nameScale: 100, ptsScale: 100, triScale: 100, logoSize: 100, rowH: 141, top: 322 },
     bg: THEMES.gelap[1], bgImg: null, bgImgOp: .35, autoGlow: true, previewSize: 1,
@@ -60,7 +60,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) { cle
 addEventListener('pagehide', () => { clearTimeout(saveT); flush(); });
 function normState(v) {
   const st = Object.assign(defaults(), v), d = defaults();
-  st.st = Object.assign({}, d.st, v.st); st.fontMap = Object.assign({}, d.fontMap, v.fontMap); st.titleCfg = Object.assign({}, d.titleCfg, v.titleCfg);
+  st.st = Object.assign({}, d.st, v.st); st.fontMap = Object.assign({}, d.fontMap, v.fontMap); Object.keys(st.fontMap).forEach(k => { if (/MotoGP/.test(st.fontMap[k])) st.fontMap[k] = 'Formula 1 Bold'; }); st.titleCfg = Object.assign({}, d.titleCfg, v.titleCfg);
   st.teams.forEach(t => { if (t.c4 == null) t.c4 = t.c3; if (t.ns == null) t.ns = 100; if (t.lx == null) t.lx = 0; if (t.logoScale == null) t.logoScale = 100; });
   return st;
 }
@@ -276,4 +276,4 @@ document.addEventListener('change', async e => {
   if (t.dataset.rerender) { render(); draw(); }
 });
 
-(async () => { try { await Promise.all(['Formula 1 Bold', 'Formula 1 Regular', 'MotoGP Display Bold', 'MotoGP Text Bold', 'MotoGP Text Regular'].map(f => document.fonts.load('20px "' + f + '"'))); } catch (e) { } await load(); render(); draw(); setTimeout(draw, 300); })();
+(async () => { try { await Promise.all(['Formula 1 Bold', 'Formula 1 Regular'].map(f => document.fonts.load('20px "' + f + '"'))); } catch (e) { } await load(); render(); draw(); setTimeout(draw, 300); })();

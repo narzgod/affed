@@ -27,9 +27,6 @@ input[type=range]{width:100%;padding:0}
 .hint{color:var(--mut);font-size:12px;margin:6px 0}
 @font-face{font-family:"Formula 1 Bold";src:url(/fonts/Formula1-Bold.ttf)}
 @font-face{font-family:"Formula 1 Regular";src:url(/fonts/Formula1-Regular.ttf)}
-@font-face{font-family:"MotoGP Display Bold";src:url(fonts/MotoGP_Display_Bold.ttf)}
-@font-face{font-family:"MotoGP Text Bold";src:url(fonts/MotoGPText-Bold.ttf)}
-@font-face{font-family:"MotoGP Text Regular";src:url(fonts/MotoGPText-Regular.ttf)}
 
 .val{color:var(--tx);font-weight:700}
 button:disabled{opacity:.4;cursor:not-allowed}

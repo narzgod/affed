@@ -1,11 +1,7 @@
-/* ===== Fonts: Formula 1 + 3 MotoGP fonts. Formula 1 can be picked per event in Manager. 3 roles. To change a role, edit only the 3 lines in :root below ===== */
+/* ===== Fonts: Formula 1 is the main font. 3 roles. To change a role, edit only the 3 lines in :root below ===== */
 @font-face{font-family:"Formula1";src:url(/fonts/Formula1-Regular.ttf) format("truetype");font-weight:400;font-display:swap}
 @font-face{font-family:"Formula1";src:url(/fonts/Formula1-Bold.ttf) format("truetype");font-weight:700;font-display:swap}
-@font-face{font-family:"MotoGP Display";src:url(/fonts/MotoGP_Display_Bold.ttf) format("truetype");font-weight:700;font-display:swap}
-@font-face{font-family:"MotoGP Text";src:url(/fonts/MotoGPText-Regular.ttf) format("truetype");font-weight:400;font-display:swap}
-@font-face{font-family:"MotoGP Text";src:url(/fonts/MotoGPText-Bold.ttf) format("truetype");font-weight:700;font-display:swap}
 :root{--f-title:"Formula1","Arial Narrow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--f-ui:"Formula1","Arial Narrow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--f-body:"Formula1","Arial Narrow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-/* all three roles now use Formula 1 | old note: title = Display Bold (brand, headings, names, numbers) | ui = Text Bold (labels, tabs, buttons, table heads) | body = Text Regular */
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--a:#e10600;--ac:#fff;--bg:#0c0d12;--s1:#14161d;--s2:#1b1e27;--ln:#262a36;--t:#f2f4f8;--m:#8b93a7;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
