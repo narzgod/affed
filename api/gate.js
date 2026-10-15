@@ -15,7 +15,7 @@ async function readBody(req) {
   try { return JSON.parse(raw || '{}'); } catch (e) { return {}; }
 }
 const LOCK = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Restricted</title><style>
-@font-face{font-family:D;src:url(/fonts/MotoGP_Display_Bold.ttf)}@font-face{font-family:T;src:url(/fonts/MotoGPText-Regular.ttf)}
+@font-face{font-family:D;src:url(/fonts/Formula1-Bold.ttf)}@font-face{font-family:T;src:url(/fonts/Formula1-Regular.ttf)}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0c0d12;color:#f2f4f8;font:15px T,system-ui,sans-serif;padding:20px}
 .b{width:100%;max-width:340px}h1{font:700 26px D,Impact,sans-serif;font-style:normal;margin:0 0 6px}h1 span{color:#e10600}p{color:#8b93a7;margin:0 0 18px}
 input{width:100%;padding:13px;border-radius:10px;border:1px solid #262a36;background:#14161d;color:#fff;font:inherit}input:focus{outline:2px solid #e10600}
