@@ -2,6 +2,8 @@
 @font-face{font-family:"Formula1";src:url(/fonts/Formula1-Regular.ttf) format("truetype");font-weight:400;font-display:swap}
 @font-face{font-family:"Formula1";src:url(/fonts/Formula1-Bold.ttf) format("truetype");font-weight:700;font-display:swap}
 :root{--f-title:"Formula1","Arial Narrow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--f-ui:"Formula1","Arial Narrow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--f-body:"Formula1","Arial Narrow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+/* Formula 1 is a wide font: default text scale smaller than MotoGP (event font-size sliders still work) */
+:root{--fsb:.88;--fsh:.8}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--a:#e10600;--ac:#fff;--bg:#0c0d12;--s1:#14161d;--s2:#1b1e27;--ln:#262a36;--t:#f2f4f8;--m:#8b93a7;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -11,7 +13,7 @@ a{color:inherit}
 .tb{display:flex;align-items:center;gap:12px;padding:10px 16px;max-width:640px;margin:auto;min-height:56px}
 .tb h1{flex:1;margin:0;font-size:calc(17px*var(--fsb,1));font-weight:800;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bk{width:36px;height:36px;border-radius:10px;background:var(--s2);display:grid;place-items:center;text-decoration:none;font-size:calc(18px*var(--fsb,1))}
-.br{font-weight:300;font-size:calc(20px*var(--fsh,1))}.br b{font-weight:900;letter-spacing:.14em;color:var(--a);font-size:calc(20px*var(--fsh,1))}
+.br{font-weight:700;letter-spacing:.02em;white-space:nowrap;font-size:calc(18px*var(--fsh,1))}.br b{font-weight:700;letter-spacing:inherit;color:var(--a);font-size:inherit}
 .w{max-width:640px;margin:auto;padding:16px 16px 96px}
 .ph{margin:6px 0 14px;font-size:calc(26px*var(--fsh,1));font-weight:800;letter-spacing:-.01em}
 .sec{margin:22px 0 10px;font-size:calc(11px*var(--fsb,1));letter-spacing:.14em;text-transform:uppercase;color:var(--m);font-weight:700}
