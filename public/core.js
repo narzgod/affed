@@ -110,7 +110,7 @@ if(!wa)return{err:'Enter a valid WhatsApp number (e.g. 0812-3456-7890 or +62 812
 function addLic(n,d,w){const c=chkLic(n,d,w);if(c.err)return c.err;S.dr.push(c.item);save();return''}
 async function sendReg(kind,item){try{const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind,item})});const j=await r.json().catch(()=>({}));if(r.ok)return'';return j.err||'Could not send. Try again.'}catch(e){return'No connection. Try again.'}}
 async function addLicP(n,d,w){await READY;const c=chkLic(n,d,w);if(c.err)return c.err;
-if(SYNC!='cloud'){S.dr.push(c.item);save();return''}const e=await sendReg('driver',c.item);await load();return e}
+if(SYNC!='cloud')return'Registration is not available right now (database not connected). Please contact the admin.';const e=await sendReg('driver',c.item);await load();return e}
 let TF=null;
 function teamForm(e,t){TF={e,t:t||null,prev:{},dflt:{}};const x=t||{},V=k=>esc(x[k]||'');
 return`<div class=f><label>Team name</label><input id=tn value="${V('name')}">${e.soc?`<label>Team social account</label><input id=ts value="${V('soc')}">`:''}<label>Team Principal name</label><input id=tp value="${V('tp')}"><label>Team Principal WhatsApp</label><input id=tpw inputmode=tel placeholder="0812-3456-7890" value="${V('tpw')}"><label>Team Owner name</label><input id=ow value="${V('ow')}"><label>Team Owner WhatsApp</label><input id=oww inputmode=tel placeholder="0812-3456-7890" value="${V('oww')}">${colorField('tcl','Main Color',x.col||'#e10600')}${colorField('tcl2','Second Color',x.col2||'#ffffff')}${ADMIN?colorField('ttx','Team & driver text color',x.tx||x.col||'#e10600'):''}${SL.map(([id,l])=>`<label>${l}${id[0]=='r'?' (optional)':''}</label><div class=pk><input id=q_${id} placeholder="Search name or DID" oninput=pfAll()><div class=sg id=sg_${id}></div><select id=${id} onchange=pfAll()></select><input id=n_${id} inputmode=numeric maxlength=2 placeholder="Race number (1-99) - required" hidden></div>`).join('')}</div>`}
@@ -136,7 +136,7 @@ if(others.some(t=>t.name.toLowerCase()==v('tn').toLowerCase()))return er('Team n
 const usedBy=(dd)=>new Set(others.flatMap(t=>Object.entries(t.num||{}).filter(([k])=>k!=dd).map(([k,v])=>v)));const mine=new Set();
 for(const [id,l] of SL){const dd=$('#'+id).value,val=$('#n_'+id).value.trim();if(!dd)continue;
 if(!/^\d{1,2}$/.test(val)||+val<1)return er('Race number (1-99) is required for '+l+'.');if(usedBy(dd).has(String(+val))||mine.has(String(+val)))return er('Race number '+(+val)+' is already taken.');mine.add(String(+val));num[dd]=String(+val)}
-if(!admin){if(!isOpen(e))return er('Registration is closed.');if(!old&&isFull(e))return er('Team slots are full.')}
+if(!admin&&SYNC!='cloud')return er('Registration is not available right now (database not connected). Please contact the admin.');if(!admin){if(!isOpen(e))return er('Registration is closed.');if(!old&&isFull(e))return er('Team slots are full.')}
 const o={id:old?old.id:uid(),ev:e.id,name:v('tn'),soc:v('ts'),tp:v('tp'),tpw:w1,ow:v('ow'),oww:w2,col:c1,col2:c2,d,num};if(admin){o.tx=tx;delete o.dtx;if(old)delete old.dtx}
 if(!admin&&!old&&SYNC=='cloud')return sendReg('team',o).then(async m=>{await load();if(m){say(m);return false}return true});
 if(old)Object.assign(old,o);else S.tm.push(o);save();return true}

@@ -1,6 +1,6 @@
 /* Shared helpers for the database API (Upstash Redis REST, added from the Vercel Marketplace). */
 const crypto = require('crypto');
-const KEY = 'frl:state';
+const KEY = 'aff:state';
 const URL_ = () => process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || '';
 const TOK = () => process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '';
 const hasDb = () => !!(URL_() && TOK());
